@@ -7,20 +7,19 @@ const loader = document.getElementById("loader");
 
 let apiQuotes = [];
 
-//show loading
-function loading() {
+function showLoadingSpinner() {
   loader.hidden = false;
   quoteContainer.hidden = true;
 }
 
-//hide loading
-function complete() {
+//hide showLoadingSpinner
+function completeLoading() {
   loader.hidden = true;
   quoteContainer.hidden = false;
 }
 
 function newQuote() {
-  loading();
+  showLoadingSpinner();
   // pick a random quote
   const quote =
     apiQuotes.quotes[Math.floor(Math.random() * apiQuotes.quotes.length)];
@@ -35,12 +34,12 @@ function newQuote() {
     quoteText.classList.remove("long-quote");
   }
 
-  complete();
+  completeLoading();
 }
 
 // Get Quotes from API
 async function getQuotes() {
-  loading();
+  showLoadingSpinner();
   const apiUrl = "https://dummyjson.com/quotes?limit=0";
   try {
     const response = await fetch(apiUrl);
@@ -48,6 +47,7 @@ async function getQuotes() {
     newQuote();
   } catch (error) {
     // Catch Error
+    console.log(error);
   }
 }
 
